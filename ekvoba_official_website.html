@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKVOBA - Elahera Vidyalaya Old Boys Association</title>
+    <link rel="icon" type="image/jpeg" href="ekvoba-logo.jpg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0A192F',
+                        gold: '#D4AF37',
+                        goldHover: '#B5952F',
+                        pastel: '#F0F4F8'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Sinhala', 'sans-serif'],
+                        sinhala: ['Noto Sans Sinhala', 'Iskoola Pota', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS for Language Toggling, Sinhala Typography & Smooth Transitions -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Sinhala', sans-serif;
+        }
+
+        /* Official Sinhala typography & spacing */
+        .si-text,
+        body.lang-si,
+        body.lang-si #formMessage {
+            font-family: 'Noto Sans Sinhala', 'Iskoola Pota', sans-serif;
+            letter-spacing: 0 !important;
+            word-spacing: 0.12em;
+        }
+
+        /* Proper line distance for Sinhala sentences & paragraphs */
+        body.lang-si p,
+        body.lang-si p .si-text,
+        body.lang-si li .si-text {
+            line-height: 1.85 !important;
+        }
+
+        body.lang-si h1 .si-text,
+        body.lang-si h2 .si-text,
+        body.lang-si h3 .si-text {
+            line-height: 1.4 !important;
+        }
+
+        /* Default state: Sinhala is hidden */
+        .si-text {
+            display: none;
+        }
+
+        /* Active state: When body has 'lang-si' class, hide English, show Sinhala */
+        body.lang-si .en-text {
+            display: none !important;
+        }
+
+        body.lang-si .si-text {
+            display: inline-block !important;
+            /* Using inline-block to maintain text flow */
+        }
+
+        body.lang-si blockquote .si-text,
+        body.lang-si p .si-text,
+        body.lang-si div>.si-text,
+        body.lang-si h1 .si-text,
+        body.lang-si h2 .si-text,
+        body.lang-si h3 .si-text {
+            display: block !important;
+        }
+
+        /* Specific overrides for buttons or links to keep inline flow if needed */
+        body.lang-si a .si-text,
+        body.lang-si button .si-text,
+        body.lang-si span .si-text {
+            display: inline !important;
+        }
+    </style>
+</head>
+
+<body class="bg-pastel text-gray-800 antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-navy text-white z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Title -->
+                <div class="flex items-center flex-shrink-0">
+                    <img src="ekvoba-logo.jpg" alt="EKVOBA Logo"
+                        class="h-12 w-12 rounded-full border-2 border-gold mr-3 object-contain bg-white p-0.5">
+                    <span class="font-bold text-2xl tracking-wider text-gold">EKVOBA</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="hover:text-gold transition font-medium">
+                        <span class="en-text">Home</span>
+                        <span class="si-text">මුල් පිටුව</span>
+                    </a>
+                    <a href="#announcements" class="hover:text-gold transition font-medium">
+                        <span class="en-text">Announcements</span>
+                        <span class="si-text">නිවේදන</span>
+                    </a>
+                    <a href="#about" class="hover:text-gold transition font-medium">
+                        <span class="en-text">About</span>
+                        <span class="si-text">අප ගැන</span>
+                    </a>
+                    <a href="downloads.html" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition font-medium">
+                        <span class="en-text">Downloads</span>
+                        <span class="si-text">බාගත කිරීම්</span>
+                    </a>
+                    <a href="#contact" class="hover:text-gold transition font-medium">
+                        <span class="en-text">Contact</span>
+                        <span class="si-text">සම්බන්ධ වන්න</span>
+                    </a>
+
+                    <!-- Language Toggle Button -->
+                    <button onclick="toggleLanguage()"
+                        class="flex items-center space-x-1 border border-gold text-gold px-3 py-1 rounded hover:bg-gold hover:text-navy transition font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        <span class="en-text">සිංහල</span>
+                        <span class="si-text">English</span>
+                    </button>
+
+                    <!-- Join Button -->
+                    <a href="#join"
+                        class="bg-gold text-navy px-5 py-2 rounded-full font-bold hover:bg-goldHover transition shadow-md">
+                        <span class="en-text">Join With Us</span>
+                        <span class="si-text">එක්වන්න</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleLanguage()"
+                        class="mr-4 border border-gold text-gold px-2 py-1 rounded text-sm">
+                        <span class="en-text">සිංහල</span>
+                        <span class="si-text">EN</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-gold focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                <a href="#home" class="block px-3 py-2 text-white hover:text-gold">
+                    <span class="en-text">Home</span>
+                    <span class="si-text">මුල් පිටුව</span>
+                </a>
+                <a href="#announcements" class="block px-3 py-2 text-white hover:text-gold">
+                    <span class="en-text">Announcements</span>
+                    <span class="si-text">නිවේදන</span>
+                </a>
+                <a href="#about" class="block px-3 py-2 text-white hover:text-gold">
+                    <span class="en-text">About</span>
+                    <span class="si-text">අප ගැන</span>
+                </a>
+                <a href="downloads.html" target="_blank" rel="noopener noreferrer" class="block px-3 py-2 text-white hover:text-gold">
+                    <span class="en-text">Downloads</span>
+                    <span class="si-text">බාගත කිරීම්</span>
+                </a>
+                <a href="#contact" class="block px-3 py-2 text-white hover:text-gold">
+                    <span class="en-text">Contact</span>
+                    <span class="si-text">සම්බන්ධ වන්න</span>
+                </a>
+                <a href="#join" class="block px-3 py-2 bg-gold text-navy font-bold rounded-md mx-4 mt-4">
+                    <span class="en-text">Join With Us</span>
+                    <span class="si-text">එක්වන්න</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home"
+        class="relative pt-20 min-h-screen flex items-center justify-center bg-navy overflow-hidden py-16">
+        <!-- Background Overlay -->
+        <div
+            class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.18)_0%,rgba(10,25,47,0.95)_55%,#06101F_100%)]">
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <img src="ekvoba-logo.jpg" alt="EKVOBA Main Logo"
+                class="mx-auto w-36 h-36 md:w-52 md:h-52 rounded-full border-4 border-gold shadow-2xl mb-6 object-contain bg-white p-2">
+            <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-gold/90 font-semibold mb-3">
+                <span class="en-text"><span class="font-sinhala tracking-normal normal-case">විද්‍යා දදාති විනයං</span> • Vidya Dadati Vinayam</span>
+                <span class="si-text">විද්‍යා දදාති විනයං • පො / ඇලහැර විදුහල</span>
+            </p>
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                <span class="en-text">Welcome to E.K.V Old Boys Assoiation</span>
+                <span class="si-text">ඇලහැර විද්‍යාලීය ආදි ශිෂ්‍ය සංගමය වෙත සාදරයෙන් පිළිගනිමු</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gold mb-8 italic drop-shadow-md">
+                Reunite • Support • Inspire
+            </p>
+            <p class="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+                <span class="en-text">The official network for the proud alumni of Elahera Vidyalaya. Connecting past
+                    pupils to build a brighter future for our alma mater.</span>
+                <span class="si-text">ඇලහැර විද්‍යාලයේ අභිමානවත් ආදි සිසුන්ගේ නිල එකමුතුව. අපගේ පාසලට දීප්තිමත් අනාගතයක්
+                    ගොඩනැගීම සඳහා ආදි සිසුන් සම්බන්ධ කිරීම.</span>
+            </p>
+            <a href="#join"
+                class="inline-block bg-gold text-navy px-8 py-3 rounded-full text-lg font-bold shadow-lg hover:bg-goldHover hover:scale-105 transition transform duration-300">
+                <span class="en-text">Become a Member</span>
+                <span class="si-text">සාමාජිකයෙකු වන්න</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section id="announcements" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy mb-4 relative inline-block">
+                    <span class="en-text">Announcements</span>
+                    <span class="si-text">නිවේදන</span>
+                    <div class="h-1 w-1/2 bg-gold mx-auto mt-2 rounded"></div>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-2">
+                    <span class="en-text">Stay informed with the latest official notices, meetings, and upcoming events
+                        from EKVOBA.</span>
+                    <span class="si-text">EKVOBA හි නවතම නිල නිවේදන, රැස්වීම් සහ ඉදිරි වැඩසටහන් පිළිබඳව දැනුවත්
+                        වන්න.</span>
+                </p>
+            </div>
+
+            <!-- Featured First Announcement: First AGM -->
+            <div
+                class="bg-gradient-to-br from-navy via-[#0F2442] to-navy rounded-2xl shadow-2xl overflow-hidden border-2 border-gold">
+                <div class="p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
+                    <!-- Date Badge -->
+                    <div
+                        class="flex-shrink-0 bg-gold text-navy rounded-2xl px-6 py-5 text-center shadow-lg min-w-[140px] mx-auto md:mx-0">
+                        <span class="block text-xs font-bold uppercase tracking-widest">
+                            <span class="en-text">Nov</span>
+                            <span class="si-text">නොවැ</span>
+                        </span>
+                        <span class="block text-5xl font-extrabold leading-none my-1">30</span>
+                        <span class="block text-sm font-bold">2026</span>
+                    </div>
+
+                    <!-- Announcement Content -->
+                    <div class="flex-1 text-center md:text-left">
+                        <div
+                            class="inline-flex items-center space-x-2 bg-gold/20 border border-gold/40 text-gold text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4">
+                            <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                            <span class="en-text">Official Invitation • First AGM</span>
+                            <span class="si-text">නිල ආරාධනාව • පළමු මහා සභා රැස්වීම</span>
+                        </div>
+
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">
+                            <span class="en-text">First Annual General Meeting (AGM)</span>
+                            <span class="si-text">පළමු වාර්ෂික මහා සභා රැස්වීම (AGM)</span>
+                        </h3>
+
+                        <p class="text-gray-300 leading-relaxed mb-6">
+                            <span class="en-text">The First Annual General Meeting of the Elahera Vidyalaya Old Boys
+                                Association will be held on <strong class="text-gold">30th November 2026</strong> at the
+                                <strong class="text-gold">Elahera Vidyalaya School Premises</strong>. All Old Boys are
+                                kindly invited to attend this historic gathering as we reunite, share ideas, and chart
+                                the path forward for our alma mater.</span>
+                            <span class="si-text">ඇලහැර විද්‍යාලීය ආදි ශිෂ්‍ය සංගමයේ පළමු වාර්ෂික මහා සභා රැස්වීම
+                                <strong class="text-gold">2026 නොවැම්බර් මස 30 වන දින</strong> <strong
+                                    class="text-gold">ඇලහැර විද්‍යාලීය පරිශ්‍රයේදී</strong> පැවැත්වේ. අපගේ පාසලේ අනාගතය
+                                ගොඩනැගීමට එක්ව, අදහස් බෙදා ගැනීම සඳහා සියලුම ආදි සිසුන්ට ගෞරවයෙන් ආරාධනා කර
+                                සිටිමු.</span>
+                        </p>
+
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-gray-200">
+                            <div class="flex items-center bg-white/10 px-4 py-2 rounded-lg">
+                                <svg class="w-5 h-5 text-gold mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="en-text">30th November 2026</span>
+                                <span class="si-text">2026 නොවැම්බර් 30</span>
+                            </div>
+                            <div class="flex items-center bg-white/10 px-4 py-2 rounded-lg">
+                                <svg class="w-5 h-5 text-gold mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span class="en-text">Elahera Vidyalaya School Premises</span>
+                                <span class="si-text">ඇලහැර විද්‍යාලීය පරිශ්‍රය</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="flex-shrink-0 mx-auto md:mx-0">
+                        <a href="#join"
+                            class="inline-block bg-gold text-navy px-6 py-3 rounded-full font-bold hover:bg-goldHover transition shadow-lg whitespace-nowrap">
+                            <span class="en-text">Register Now</span>
+                            <span class="si-text">ලියාපදිංචි වන්න</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Vision & Mission) -->
+    <section id="about" class="py-20 bg-pastel">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy mb-4 relative inline-block">
+                    <span class="en-text">Our Purpose</span>
+                    <span class="si-text">අපගේ අරමුණ</span>
+                    <div class="h-1 w-1/2 bg-gold mx-auto mt-2 rounded"></div>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Vision Card -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition duration-300 border-t-4 border-gold">
+                    <div class="bg-navy w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto md:mx-0">
+                        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4 text-center md:text-left">
+                        <span class="en-text">Our Vision</span>
+                        <span class="si-text">අපගේ දැක්ම</span>
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed text-center md:text-left">
+                        <span class="en-text">To be a leading alumni association that globally unites the past pupils of
+                            Elahera Vidyalaya, fostering a strong network of professionals who actively contribute to
+                            the continuous development, prestige, and legacy of our beloved alma mater.</span>
+                        <span class="si-text">ඇලහැර විද්‍යාලයේ ආදි සිසුන් ගෝලීය වශයෙන් එක්සත් කරන, අපගේ ආදරණීය පාසලේ
+                            අඛණ්ඩ සංවර්ධනය, කීර්තිය සහ උරුමය සඳහා ක්‍රියාකාරීව දායක වන වෘත්තිකයන්ගේ ශක්තිමත් ජාලයක්
+                            පෝෂණය කරන ප්‍රමුඛතම ආදි ශිෂ්‍ය සංගමයක් වීම.</span>
+                    </p>
+                </div>
+
+                <!-- Mission Card -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition duration-300 border-t-4 border-navy">
+                    <div class="bg-gold w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto md:mx-0">
+                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4 text-center md:text-left">
+                        <span class="en-text">Our Mission</span>
+                        <span class="si-text">අපගේ මෙහෙවර</span>
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed text-center md:text-left">
+                        <span class="en-text">To empower and uplift current students through scholarships, mentorship,
+                            and infrastructure development, while organizing events that strengthen the bonds among
+                            alumni, ensuring the values of Elahera Vidyalaya thrive for generations.</span>
+                        <span class="si-text">ශිෂ්‍යත්ව, උපදේශන සහ යටිතල පහසුකම් සංවර්ධනය හරහා වත්මන් සිසුන් සවිබල
+                            ගැන්වීම සහ නඟා සිටුවීම, එමෙන්ම ආදි සිසුන් අතර බැඳීම ශක්තිමත් කරන සිදුවීම් සංවිධානය කරමින්,
+                            ඇලහැර විද්‍යාලයේ හරයන් පරම්පරාවෙන් පරම්පරාවට ගෙන යාම.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join With Us (Registration Form) -->
+    <section id="join" class="py-20 bg-pastel">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-navy mb-4">
+                    <span class="en-text">Join With Us</span>
+                    <span class="si-text">අප හා එක්වන්න</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    <span class="en-text">Register below to become an official member of EKVOBA and stay updated on our
+                        latest projects and events.</span>
+                    <span class="si-text">EKVOBA හි නිල සාමාජිකයෙකු වීමට පහතින් ලියාපදිංචි වන්න සහ අපගේ නවතම ව්‍යාපෘති
+                        පිළිබඳව දැනුවත් වන්න.</span>
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 border-t-4 border-gold">
+                <!-- Registration Form -->
+                <form id="registrationForm" onsubmit="submitForm(event)" class="space-y-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-semibold text-navy mb-2">
+                                <span class="en-text">Full Name</span>
+                                <span class="si-text">සම්පූර්ණ නම</span>
+                            </label>
+                            <input type="text" id="fullName" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition">
+                        </div>
+
+                        <!-- Years Attended -->
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">
+                                <span class="en-text">Years Attended (e.g. 2005 - 2018)</span>
+                                <span class="si-text">පාසල් ගිය වසර (උදා: 2005 - 2018)</span>
+                            </label>
+                            <input type="text" id="yearsAttended" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition">
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">
+                                <span class="en-text">Phone Number</span>
+                                <span class="si-text">දුරකථන අංකය</span>
+                            </label>
+                            <input type="tel" id="phone" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">
+                                <span class="en-text">Email Address</span>
+                                <span class="si-text">විද්‍යුත් තැපෑල (Email)</span>
+                            </label>
+                            <input type="email" id="email" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition">
+                        </div>
+
+                        <!-- Profession -->
+                        <div>
+                            <label class="block text-sm font-semibold text-navy mb-2">
+                                <span class="en-text">Current Profession</span>
+                                <span class="si-text">වත්මන් රැකියාව</span>
+                            </label>
+                            <input type="text" id="profession" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button & Feedback Area -->
+                    <div class="pt-4 flex flex-col items-center">
+                        <button type="submit" id="submitBtn"
+                            class="w-full md:w-auto px-10 py-3 bg-navy text-white rounded-lg font-bold hover:bg-gold hover:text-navy transition duration-300 shadow-md flex justify-center items-center">
+                            <span id="btnText" class="en-text">Submit Registration</span>
+                            <span id="btnTextSi" class="si-text">ලියාපදිංචි වන්න</span>
+
+                            <!-- Loading spinner (hidden by default) -->
+                            <svg id="loadingSpinner" class="hidden animate-spin ml-2 h-5 w-5 text-current"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </button>
+
+                        <!-- Success/Error Message display -->
+                        <div id="formMessage" class="mt-4 text-center font-medium hidden rounded p-3 w-full"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-navy pt-16 pb-8 border-t-4 border-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 border-b border-gray-800 pb-12">
+
+                <!-- Brand Info -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <img src="ekvoba-logo.jpg" alt="EKVOBA Logo"
+                            class="h-10 w-10 rounded-full border border-gold mr-3 object-contain bg-white p-0.5">
+                        <span class="font-bold text-2xl text-gold">EKVOBA</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        <span class="en-text">Elahera Vidyalaya Old Boys Association. Fostering unity and dedicated to
+                            the continuous development of our alma mater.</span>
+                        <span class="si-text">ඇලහැර විද්‍යාලයේ ආදි ශිෂ්‍ය සංගමය. අපගේ පාසලේ අඛණ්ඩ සංවර්ධනය සඳහා කැපවී
+                            එකමුතුකම පෝෂණය කිරීම.</span>
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-2 inline-block">
+                        <span class="en-text">Quick Links</span>
+                        <span class="si-text">පහසු සබැඳි</span>
+                    </h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#home" class="text-gray-400 hover:text-gold transition flex items-center">
+                                <span class="mr-2 text-gold">›</span>
+                                <span class="en-text">Home</span>
+                                <span class="si-text">මුල් පිටුව</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#announcements" class="text-gray-400 hover:text-gold transition flex items-center">
+                                <span class="mr-2 text-gold">›</span>
+                                <span class="en-text">Announcements</span>
+                                <span class="si-text">නිවේදන</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#about" class="text-gray-400 hover:text-gold transition flex items-center">
+                                <span class="mr-2 text-gold">›</span>
+                                <span class="en-text">Vision & Mission</span>
+                                <span class="si-text">දැක්ම සහ මෙහෙවර</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="downloads.html" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gold transition flex items-center">
+                                <span class="mr-2 text-gold">›</span>
+                                <span class="en-text">Downloads</span>
+                                <span class="si-text">බාගත කිරීම්</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#join" class="text-gray-400 hover:text-gold transition flex items-center">
+                                <span class="mr-2 text-gold">›</span>
+                                <span class="en-text">Register Online</span>
+                                <span class="si-text">මාර්ගගතව ලියාපදිංචි වන්න</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-2 inline-block">
+                        <span class="en-text">Contact Us</span>
+                        <span class="si-text">අපව අමතන්න</span>
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start text-gray-400">
+                            <svg class="h-6 w-6 text-gold mr-3 mt-0.5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Elahera Vidyalaya,<br>Elahera, Sri Lanka.</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <svg class="h-6 w-6 text-gold mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <a href="tel:+94714691716" class="hover:text-gold transition">071 4691716</a>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <svg class="h-6 w-6 text-gold mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <a href="mailto:info@ekvoba.lk" class="hover:text-gold transition">info@ekvoba.lk</a>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <svg class="h-6 w-6 text-gold mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                            <a href="https://www.ekvoba.lk" target="_blank"
+                                class="hover:text-gold transition">www.ekvoba.lk</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 EKVOBA. All Rights Reserved.<br>
+                    <span class="text-xs mt-2 block">Designed & Developed for Elahera Vidyalaya Old Boys
+                        Association</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Features -->
+    <script>
+        // 1. Language Toggle Logic
+        function toggleLanguage() {
+            // Toggle 'lang-si' class on the body to activate CSS overrides
+            const isSinhala = document.body.classList.toggle('lang-si');
+            document.documentElement.lang = isSinhala ? 'si' : 'en';
+        }
+
+        // 2. Mobile Menu Logic
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 3. Form Submission to Google Sheets
+        // Note: You must deploy a Google Apps Script Web App to get a real URL.
+        const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE";
+
+        function submitForm(event) {
+            event.preventDefault(); // Prevent standard page reload
+
+            const btn = document.getElementById('submitBtn');
+            const spinner = document.getElementById('loadingSpinner');
+            const btnTextEn = document.getElementById('btnText');
+            const btnTextSi = document.getElementById('btnTextSi');
+            const messageBox = document.getElementById('formMessage');
+
+            // Gather data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                yearsAttended: document.getElementById('yearsAttended').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                profession: document.getElementById('profession').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // UI Update: Show loading state
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnTextEn.classList.add('opacity-50');
+            btnTextSi.classList.add('opacity-50');
+            messageBox.classList.add('hidden');
+            messageBox.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+            // Determine current language for messages
+            const isSinhala = document.body.classList.contains('lang-si');
+
+            // --- SIMULATION OF SUBMISSION FOR PREVIEW ENVIRONMENT ---
+            // Remove this setTimeout block when you add your real GOOGLE_SCRIPT_URL
+            setTimeout(() => {
+                // Reset UI
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnTextEn.classList.remove('opacity-50');
+                btnTextSi.classList.remove('opacity-50');
+
+                // Show success
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+
+                if (isSinhala) {
+                    messageBox.innerText = "ඔබගේ තොරතුරු සාර්ථකව යවන ලදී! ස්තුතියි.";
+                } else {
+                    messageBox.innerText = "Registration successful! Thank you.";
+                }
+
+                // Clear form
+                document.getElementById('registrationForm').reset();
+
+            }, 1500);
+
+
+            // --- REAL FETCH CODE (Uncomment and configure when ready) ---
+            /*
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Important for Google Script
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                // Because of 'no-cors', response is opaque, assume success if no JS error
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnTextEn.classList.remove('opacity-50');
+                btnTextSi.classList.remove('opacity-50');
+                
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+                messageBox.innerText = isSinhala ? "ඔබගේ තොරතුරු සාර්ථකව යවන ලදී! ස්තුතියි." : "Registration successful! Thank you.";
+                
+                document.getElementById('registrationForm').reset();
+            })
+            .catch(error => {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnTextEn.classList.remove('opacity-50');
+                btnTextSi.classList.remove('opacity-50');
+                
+                messageBox.classList.remove('hidden');
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+                messageBox.innerText = isSinhala ? "දෝෂයක්! කරුණාකර නැවත උත්සාහ කරන්න." : "Error submitting. Please try again.";
+                console.error('Error!', error.message);
+            });
+            */
+        }
+    </script>
+</body>
+
+</html>
